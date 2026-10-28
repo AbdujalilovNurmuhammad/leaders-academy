@@ -1,0 +1,11 @@
+{
+  "name": "leaders-academy",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -n server,client -c blue,cyan \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix server run build && npm --prefix client run build",
+    "start": "concurrently -n server,client \"npm --prefix server run start\" \"npm --prefix client run start\""
+  },
+  "devDependencies": { "concurrently": "^8.2.2" }
+}

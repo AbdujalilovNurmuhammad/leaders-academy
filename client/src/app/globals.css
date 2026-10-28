@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 243 247 255; --fg: 8 20 51; --card: 255 255 255; --mut: 90 107 144; --line: 217 228 251;
+  --brand: 29 91 255; --cyan: 25 211 255; --navy: 5 13 43;
+}
+.dark {
+  --bg: 6 14 38; --fg: 234 241 255; --card: 13 26 59; --mut: 157 176 214; --line: 26 44 92;
+}
+
+@property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-bg text-fg font-sans antialiased overflow-x-hidden transition-colors duration-300; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  h1, h2 { @apply font-extrabold; }
+  button, a { @apply outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-bg; }
+}
+
+@layer components {
+  .card { @apply bg-card border border-line rounded-3xl; }
+  .btn { @apply relative overflow-hidden inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold transition duration-200 hover:-translate-y-0.5 disabled:opacity-60 disabled:pointer-events-none; }
+  .btn::before { content: ''; @apply absolute top-0 -left-[120%] w-[55%] h-full -skew-x-[20deg] transition-all duration-700; background: linear-gradient(100deg, transparent, rgba(255,255,255,.5), transparent); }
+  .btn:hover::before { left: 150%; }
+  .btn-primary { @apply bg-gradient-to-br from-brand to-[#4d8bff] text-white shadow-[0_14px_34px_-10px_rgba(29,91,255,.7)]; }
+  .btn-white { @apply bg-white text-[#0b2a8f]; }
+  .btn-glass { @apply bg-white/10 text-white border border-white/30 backdrop-blur-md; }
+  .btn-ghost { @apply border border-line text-fg bg-transparent; }
+  .glass { @apply bg-white/10 border border-white/20 backdrop-blur-xl rounded-3xl; }
+  .ico { @apply grid place-items-center w-14 h-14 rounded-2xl text-2xl text-white bg-gradient-to-br from-brand to-cyan shadow-[0_12px_26px_-10px_rgba(29,91,255,.7)]; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+  .grid-bg { @apply absolute inset-0 pointer-events-none; background-image: linear-gradient(rgba(120,160,255,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(120,160,255,.09) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%); }
+  .aur { @apply absolute rounded-full blur-[90px] opacity-50 animate-drift pointer-events-none; }
+
+  /* Sichqoncha ostidagi yorug'lik va aylanuvchi chegara */
+  .spot { --mx: 50%; --my: 50%; @apply relative transition-[transform,box-shadow] duration-300; }
+  .spot:hover { @apply shadow-[0_28px_54px_-26px_rgba(29,91,255,.55)]; }
+  .spot::before { content: ''; @apply absolute inset-0 rounded-[inherit] pointer-events-none opacity-0 transition-opacity duration-300 z-[2]; background: radial-gradient(380px circle at var(--mx) var(--my), rgba(25,211,255,.25), transparent 55%); }
+  .spot::after { content: ''; @apply absolute inset-0 rounded-[inherit] pointer-events-none opacity-0 transition-opacity duration-300 z-[3]; padding: 2px; background: conic-gradient(from var(--a), transparent 0 65%, rgb(var(--cyan)), rgb(var(--brand)), transparent); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); animation: ang 3s linear infinite; }
+  .spot:hover::before, .spot:hover::after { opacity: 1; }
+  .spot:hover .ico { transform: rotateY(360deg) scale(1.1); }
+
+  .input { @apply w-full rounded-2xl border-[1.5px] border-line bg-bg px-4 py-3.5 text-base text-fg placeholder:text-mut/70 transition outline-none focus:border-brand focus:ring-4 focus:ring-brand/15; }
+  .input-error { @apply border-red-500 focus:border-red-500 focus:ring-red-500/15; }
+  .opt { @apply rounded-2xl border-[1.5px] border-line bg-bg px-4 py-3 text-left font-semibold transition hover:border-brand; }
+  .opt-on { @apply border-brand bg-brand/10 ring-4 ring-brand/15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
